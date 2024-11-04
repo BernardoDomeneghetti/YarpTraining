@@ -25,14 +25,9 @@ public static class HttpContextExtension
         {
             throw new Exception("AccountService is not set");
         }
+        var loggedAccountIdString = context.Request.Headers["AccountId"].ToString();
+        var guidId = Guid.Parse(loggedAccountIdString);
 
-        var authorizationHeader = context.Request.Headers[HeaderNames.Authorization];
-        
-        ArgumentNullException.ThrowIfNull(authorizationHeader, nameof(authorizationHeader));
-
-        var token = authorizationHeader.ToString().Split(" ")[1];
-        var id = Guid.Parse(token);
-
-        return await _accountService.GetByIdAsync(id);
+        return await _accountService.GetByIdAsync(guidId);
     }
 }

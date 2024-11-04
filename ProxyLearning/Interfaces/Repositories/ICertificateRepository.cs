@@ -5,6 +5,8 @@ namespace ProxyLearning.Interfaces.Repositories;
 
 public interface ICertificateRepository
 {
-    Task<X509Certificate2> GetAsync(Guid key);
-    Task<X509Certificate2> Save(Guid key, X509Certificate2 certificate);
+    // Task<X509Certificate2> GetAsync(Guid key);
+    //Task SaveAsync(Guid key, X509Certificate2 certificate);
+    Task<string> GetAsync(Guid key);
+    Task SaveAsync(Guid key, string fakeCertificate);
 }

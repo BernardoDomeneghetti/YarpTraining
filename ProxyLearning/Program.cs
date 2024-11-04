@@ -17,7 +17,13 @@ internal class Program
 
         var app = builder.Build();
 
+        app.UseSwagger();
+        app.UseSwaggerUI();
+
+        app.MapSwagger();
+
         app.MapReverseProxy(proxyPipeline => proxyPipeline.UseMiddleware<CustomMiddlewareProxy>());
+        app.MapControllers();
         
         app.Run();
     }
@@ -29,7 +35,6 @@ internal class Program
         services.AddSingleton<IAccountService, AccountService>();
         services.AddSingleton<ICertificateService, CertificateService>();
         #endregion
-
         
         #region Repositories
         services.AddSingleton<IAccountRepository, AccountRepository>();
@@ -37,11 +42,11 @@ internal class Program
         #endregion
 
         #region SetUps
-        
+        services.AddSwaggerGen();
+        services.AddControllers();
         #endregion
 
         #region HttpProxy
-
         services.AddHttpContextAccessor();
 
         services.AddSingleton<DelegatingHandler, CustomClientCertificateHandler>();
